@@ -1,0 +1,47 @@
+""""
+Ejercicio de Entrega infoUsers
+Autor: Jose Manuel Granjo Marquez
+Fecha: 25-03-2025
+"""
+import os
+import cpuinfo as cpu
+
+if os.geteuid() == 0:
+    while True:
+        print("1-Para mostrar la informacion del ssoo y de la cpu")
+        print("2-Para buscar informacion sobre un usuario")
+        print("3-Comprobar el directorio")
+        print("4-Salir del programa")
+        opcion=input("Dime que deseas hacer ")
+        match opcion:
+            case "1":
+                print("Mi sistema operativo es" ,os.uname().sysname)
+                print(cpu.get_cpu_info() ["brand_raw"])
+            case "2":
+                usuario=input("Dime el nombre del usuario ")
+                archivo=open("/etc/passwd","r")
+                contenido=archivo.readlines()
+                encontrada=0
+                for i in contenido:
+                    if i.split(":")[0] == usuario:
+                        encontrada=1
+                        final=i
+                        break
+                if encontrada == 1:
+                    print(final)
+                else:
+                    print("Usario no encontrado")
+                    os.system("useradd " +usuario)
+
+            case "3":
+                directorio=input("Dime el nombre del directorio ")
+                if os.path.exists(directorio):
+                    print("Este directorio existe")
+                else:
+                    print("Este directorio no existe,procedo a crearlo")
+                    os.mkdir(directorio)
+
+            case "4":
+                break
+else:
+    print("No eres usuario root")

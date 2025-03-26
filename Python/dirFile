@@ -1,0 +1,54 @@
+"""
+Ejercicio dirFile.py
+Autor: Jose Manuel Granjo Marquez
+Fecha: 26-03-2025
+"""
+import os
+listadirectorios=[]
+listaficheros=[]
+
+ruta=open("rutas.txt","r")
+contenido=ruta.readlines()
+for i in contenido:
+    r=i.strip()
+    if os.path.isdir(r):
+        listadirectorios.append(r)
+    elif os.path.isfile(r):
+        listaficheros.append(r)
+        
+while True:
+    print("A-Eliminar fichero")
+    print("B-Mostrar informacion de directorio")
+    print("C-Copiar fichero y copiarlo en otro destino")
+    print("D-Mostrar lista")
+    print("E-Salir")
+    opcion=input("Que opcion deseas seleccionar ")
+    match opcion:
+        case "A":
+            fichero=input("Dime el nombre del fichero ")
+            if fichero in contenido:
+                os.remove(fichero)
+            
+        case "B":
+            directorio=input("Dime el nomre del directorio ")
+            if directorio in contenido:
+                os.rmdir(contenido)
+        case "C":
+            fichero2=input("Dime el nombre del fichero ")
+            
+            
+        case "D":
+            print("1-Para mostrar la lista de directorios")
+            print("2-Para mostrar la lista de ficheros")
+            numero=input("Dime que lista deseas ver ")
+            match numero:
+                case 1:
+                    print(listadirectorios)
+                case 2:
+                    print(listaficheros)
+                case _:
+                    print("opcion incorrecta")
+        case "E":
+            break        
+        case _:
+            print("Opcion no existente, seleccione de nuevo")
